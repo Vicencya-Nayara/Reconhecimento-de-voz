@@ -36,6 +36,7 @@ class _VoiceCommandPageState extends State<VoiceCommandPage> {
   String _modelResultText = '';
   String _imagePath = 'assets/imagens/aguardando.png';
 
+  // 🔥 MODELO TFLITE
   late Interpreter _interpreter;
   bool _modelLoaded = false;
 
@@ -52,7 +53,7 @@ class _VoiceCommandPageState extends State<VoiceCommandPage> {
   void initState() {
     super.initState();
     _speech = stt.SpeechToText();
-    _loadModel();
+    _loadModel(); // 🔥 carrega o modelo ao iniciar
   }
 
   Future<void> _loadModel() async {
@@ -61,8 +62,9 @@ class _VoiceCommandPageState extends State<VoiceCommandPage> {
         'assets/models/soundclassifier_with_metadata.tflite',
       );
       setState(() => _modelLoaded = true);
+      // print("✅ Modelo carregado com sucesso");
     } catch (e) {
-      debugPrint("Erro ao carregar modelo: $e");
+      // print("❌ Erro ao carregar modelo: $e");
     }
   }
 
@@ -88,6 +90,7 @@ class _VoiceCommandPageState extends State<VoiceCommandPage> {
     }
   }
 
+  // 🔥 CLASSIFICAÇÃO POR TEXTO
   String _classifyCommand(String text) {
     for (final cmd in comandos) {
       if (text.toLowerCase().contains(cmd)) {
@@ -103,6 +106,7 @@ class _VoiceCommandPageState extends State<VoiceCommandPage> {
     _imagePath = 'assets/imagens/$comando.png';
   }
 
+  // 🔥 EXECUTA O MODELO (entrada fake só para ativar o modelo)
   String _runModelDummy() {
     if (!_modelLoaded) return "Modelo ainda não carregado";
 
